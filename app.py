@@ -43,8 +43,55 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    msg = event.message.text
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(msg))
+    def IsBig(num):
+        return num >= 4
+    def IsEven(num):
+        return num == 2 or num == 4 or num == 6
+
+    msg = "歷史數據:1 1 4 5 3 5 6 2 2 1 2 3 2 2 5"
+    msg = msg[::-1][:29][::-1]
+
+    one = msg.count("1")
+    two = msg.count("2")
+    three = msg.count("3")
+    four = msg.count("4")
+    five = msg.count("5")
+    six = msg.count("6")
+
+    small = one + two + three
+    big = four + five + six
+
+    odd = one + three + five
+    even = two + four + six
+
+    reply = "------\n"
+    reply += "1: " + str(one) +"次\n" 
+    reply += "2: " + str(two) +"次\n" 
+    reply += "3: " + str(three) +"\n" 
+    reply += "4: " + str(four) +"\n" 
+    reply += "5: " + str(five) +"\n" 
+    reply += "6: " + str(six) +"\n" 
+    reply += "------\n"
+    reply += "小: " + str(small) +"\n" 
+    reply += "大: " + str(big) +"\n" 
+    reply += "------\n"
+    reply += "單: " + str(odd) +"\n" 
+    reply += "雙: " + str(even) +"\n" 
+    reply += "------\n"
+
+    if small >= 10 or odd >= 10:
+        if small >= 10 and not (IsBig(int(msg[-1])) and IsBig(int(msg[-3]))):
+            reply += "建議可下注：小\n"
+        else:
+            reply += "不建議下注：小\n"
+        if odd >= 10 and not (IsEven(int(msg[-1])) and IsEven(int(msg[-3]))):
+            reply += "建議可下注：單\n"
+        else:
+            reply += "不建議下注：單\n"
+    else:
+        reply += "不建議下注\n"
+    
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(reply))
         
 
 @handler.add(PostbackEvent)
@@ -61,8 +108,10 @@ def welcome(event):
     message = TextSendMessage(text=f'{name}歡迎加入')
     line_bot_api.reply_message(event.reply_token, message)
         
-        
+
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
+
