@@ -89,7 +89,7 @@ def handle_message(event):
         else:
             reply += "不建議下注：單\n"
     else:
-        reply += "不建議下注\n"
+        reply += "不建議下注\n "
     
     line_bot_api.reply_message(event.reply_token, TextSendMessage(reply))
         
