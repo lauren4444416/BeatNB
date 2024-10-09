@@ -48,7 +48,7 @@ def handle_message(event):
     def IsEven(num):
         return num == 2 or num == 4 or num == 6
 
-    msg = "歷史數據:1 1 4 5 3 5 6 2 2 1 2 3 2 2 5"
+    msg = event.message.text
     msg = msg[::-1][:29][::-1]
 
     one = msg.count("1")
