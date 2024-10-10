@@ -49,7 +49,9 @@ def handle_message(event):
         return num == 2 or num == 4 or num == 6
 
     msg = event.message.text
-    msg = msg[::-1][:29][::-1]
+    if msg[-1] == ' ':
+        msg = msg[:-1]
+    msg = msg[::-1][:20][::-1]
 
     one = msg.count("1")
     two = msg.count("2")
@@ -64,7 +66,8 @@ def handle_message(event):
     odd = one + three + five
     even = two + four + six
 
-    reply = "------\n"
+    reply =  "近10次開獎統計：\n"
+    reply += "------\n"
     reply += "1: " + str(one) +"次\n" 
     reply += "2: " + str(two) +"次\n" 
     reply += "3: " + str(three) +"次\n" 
@@ -79,12 +82,12 @@ def handle_message(event):
     reply += "雙: " + str(even) +"次\n" 
     reply += "------\n"
 
-    if small >= 10 or odd >= 10:
-        if small >= 10 and not (IsBig(int(msg[-1])) and IsBig(int(msg[-3]))):
+    if small >= 7 or odd >= 7:
+        if small >= 7 and not (IsBig(int(msg[-1])) and IsBig(int(msg[-3]))):
             reply += "建議可下注：小\n"
         else:
             reply += "不建議下注：小\n"
-        if odd >= 10 and not (IsEven(int(msg[-1])) and IsEven(int(msg[-3]))):
+        if odd >= 7 and not (IsEven(int(msg[-1])) and IsEven(int(msg[-3]))):
             reply += "建議可下注：單\n"
         else:
             reply += "不建議下注：單\n"
