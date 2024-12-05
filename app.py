@@ -43,58 +43,7 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    def IsBig(num):
-        return num >= 4
-    def IsEven(num):
-        return num == 2 or num == 4 or num == 6
-
-    msg = event.message.text
-    if msg[-1] == ' ':
-        msg = msg[:-1]
-    msg = msg[::-1][:20][::-1]
-
-    one = msg.count("1")
-    two = msg.count("2")
-    three = msg.count("3")
-    four = msg.count("4")
-    five = msg.count("5")
-    six = msg.count("6")
-
-    small = one + two + three
-    big = four + five + six
-
-    odd = one + three + five
-    even = two + four + six
-
-    reply =  "近10次開獎統計：\n"
-    reply += "------\n"
-    reply += "1: " + str(one) +"次\n" 
-    reply += "2: " + str(two) +"次\n" 
-    reply += "3: " + str(three) +"次\n" 
-    reply += "4: " + str(four) +"次\n" 
-    reply += "5: " + str(five) +"次\n" 
-    reply += "6: " + str(six) +"次\n" 
-    reply += "------\n"
-    reply += "小: " + str(small) +"次\n" 
-    reply += "大: " + str(big) +"次\n" 
-    reply += "------\n"
-    reply += "單: " + str(odd) +"次\n" 
-    reply += "雙: " + str(even) +"次\n" 
-    reply += "------\n"
-
-    if small >= 7 or odd >= 7:
-        if small >= 7 and not (IsBig(int(msg[-1])) and IsBig(int(msg[-3]))):
-            reply += "建議可下注：小\n"
-        else:
-            reply += "不建議下注：小\n"
-        if odd >= 7 and not (IsEven(int(msg[-1])) and IsEven(int(msg[-3]))):
-            reply += "建議可下注：單\n"
-        else:
-            reply += "不建議下注：單\n"
-    else:
-        reply += "不建議下注\n "
-    
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(reply))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage("現在時間01:00，晚上好"))
         
 
 @handler.add(PostbackEvent)
