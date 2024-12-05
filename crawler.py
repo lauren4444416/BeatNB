@@ -13,6 +13,7 @@ import tempfile, os
 import datetime
 import time
 import traceback
+import datetime
 #======python的函數庫==========
 
 app = Flask(__name__)
@@ -43,7 +44,8 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(event.reply_token, TextSendMessage("現在時間01:00，晚上好"))
+    now = datetime.datetime.now()
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(f"現在時間{now}"))
         
 
 @handler.add(PostbackEvent)
